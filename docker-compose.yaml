@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  postgres:
+    build:
+      context: ./database
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - quotes-network
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    volumes:
+      - ./backend/src:/app/src
+    networks:
+      - quotes-network
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    networks:
+      - quotes-network
+
+volumes:
+  postgres_data:
+
+networks:
+  quotes-network:
+    driver: bridge

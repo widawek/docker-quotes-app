@@ -2,9 +2,9 @@ FROM gradle:8.6.0-jdk11
 
 WORKDIR /app
 
-ENV POSTGRES_USER=kodilla
-ENV POSTGRES_PASSWORD=kodilla
-ENV POSTGRES_DB=kodilla-quotes
+ENV SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/kodilla-quotes
+ENV SPRING_DATASOURCE_USERNAME: kodilla
+ENV SPRING_DATASOURCE_PASSWORD: kodilla
 
 COPY . .
 
